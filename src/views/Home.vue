@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/mls-logo.svg">
+    <img alt="Vue logo" src="@/assets/mls-logo.svg">
     <h1> Musikgeschichte der Schweiz auf einen Klick: Das Musiklexikon der Schweiz (MLS)</h1>
     <p>
       Warum ein neues Musiklexikon? Die Schweiz verfügt im Gegensatz zu anderen europäischen Ländern über kein modernes

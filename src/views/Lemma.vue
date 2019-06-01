@@ -12,7 +12,7 @@
 
 <script>
 import axios from 'axios';
-import gravsearch_simplifier from '../lib/gravsearch_simplifier'
+import {simplify_resource} from '@/lib/gravsearch_simplifier'
 
 export default {
     name: 'lemma',
@@ -34,7 +34,7 @@ export default {
         }
     },
     mounted () {
-        alert(this.$route.params.iri);
+        // alert(this.$route.params.iri);
         this.getLemmaData(this.$route.params.iri);
     }
 }

@@ -1,6 +1,6 @@
- <template> 
-    <div>
-    <button v-for="c in alphabet" v-on:click="getStartPage(c)">{{ c }}</button>
+<template> 
+<div>
+    <button v-for="c in alphabet" v-on:click="getStartPage(c)" v-bind:key="c">{{ c }}</button>
     <div>Found {{ nitems }} items</div>
     <table>
         <tr><th>Lemma</th><th>Von</th><th>Bis</th></tr>
@@ -12,30 +12,31 @@
             <td>{{ lemma.props.hasOwnProperty('mls:hasEndDate') ? lemma.props['mls:hasEndDate'].strval : '?' }}</td>
         </tr>
     </table>
-    
+
     <paging
         v-bind:nitems="nitems"
         v-bind:pagesize="25"
-        v-bind:ch="startch"
-        v-bind:select_page="getPage"></paging>
-    </div>
+        v-bind:character="startchar"
+        v-bind:select_page="getPage">
+    </paging>
+</div>
 </template>
 
 <script>
 import axios from 'axios';
 import router from '@/router'
-import {simplify} from '../lib/gravsearch_simplifier'
-import {lemmata_query} from '../lib/queries'
+import {simplify} from '@/lib/gravsearch_simplifier'
+import {lemmata_query} from '@/lib/queries'
 
 export default {
     name: 'lemmata',
     data: function() {
        return {
             alphabet: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+                       'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
             nitems: 0,
             pagesize: 25,
-            startch: 'a',
+            startchar: 'a',
             lemmata: [],
         } 
     },
