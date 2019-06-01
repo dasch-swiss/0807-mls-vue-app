@@ -8,7 +8,7 @@ const Lexika = {
 }
 
 const Lemma = {
-    template: '<div>--- Lemma ---</div>'
+    template: '<lemma></lemma>'
 }
 
 const NotFound = {
@@ -39,7 +39,7 @@ var app = new Vue({
 */
 
 const routes = [
-    { path: '/lemma', component: Lemma },
+    { path: '/lemma/:iri', component: Lemma },
     { path: '/lemmata', component: Lemmata }
 ]
 

@@ -29,6 +29,7 @@ function simplify_property(propdata) {
             case 'knora-api:attachedToUser': break;
             case 'knora-api:hasPermissions': break;
             case 'knora-api:valueAsString': property.strval = propdata[propfield]; break;
+            case 'knora-api:listValueAsListNodeLabel': property.strval = propdata[propfield]; break;
             case 'knora-api:attachedToUser': break;
             case 'knora-api:valueCreationDate': break;
             default: ;

@@ -39,8 +39,8 @@ Vue.component('lemmata', {
             this.getPage(ch, 0);
         },
 
-        gotoLemma: function(str) {
-             alert(str);
+        gotoLemma: function(iri) {
+            router.push({ path: '/lemma/' + encodeURIComponent(iri)})
         }
     },
     mounted () {
@@ -55,7 +55,7 @@ Vue.component('lemmata', {
         <tr v-on:click="gotoLemma(lemma.iri)"
             v-for="lemma in lemmata"
             v-bind:key="lemma.iri">
-            <td v-on:click="window.alert('gaga')">{{ lemma.props['mls:hasLemmaText'].strval }}</td>
+            <td>{{ lemma.props['mls:hasLemmaText'].strval }}</td>
             <td>{{ lemma.props.hasOwnProperty('mls:hasStartDate') ? lemma.props['mls:hasStartDate'].strval : '?' }}</td>
             <td>{{ lemma.props.hasOwnProperty('mls:hasEndDate') ? lemma.props['mls:hasEndDate'].strval : '?' }}</td>
         </tr>
