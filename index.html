@@ -2,17 +2,22 @@
 <html lang="en">
 <head>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="doT.js"></script>
     <script src="gravsearch_simplifier.js"></script>
     <script src="queries.js"></script>
+    <script src="paging.js"></script>
     <script src="lemmata.js"></script>
+    <script src="lemma.js"></script>
     <meta charset="UTF-8">
     <title>Musikalisches Lexikon der Schweiz (MLS) </title>
 </head>
 <body>
 <div id="app">
-    <lemmata></lemmata>
+    <router-link to="/lemmata">Lemmata</router-link>
+    <router-link to="/lemma">Lemma</router-link>
+    <router-view></router-view>
 </div>
 <script src="app.js"></script>
 </body>
