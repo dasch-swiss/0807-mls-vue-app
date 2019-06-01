@@ -1,16 +1,43 @@
-Vue.component('lemmata', {
+ <template> 
+    <div>
+    <button v-for="c in alphabet" v-on:click="getStartPage(c)">{{ c }}</button>
+    <div>Found {{ nitems }} items</div>
+    <table>
+        <tr><th>Lemma</th><th>Von</th><th>Bis</th></tr>
+        <tr v-on:click="gotoLemma(lemma.iri)"
+            v-for="lemma in lemmata"
+            v-bind:key="lemma.iri">
+            <td>{{ lemma.props['mls:hasLemmaText'].strval }}</td>
+            <td>{{ lemma.props.hasOwnProperty('mls:hasStartDate') ? lemma.props['mls:hasStartDate'].strval : '?' }}</td>
+            <td>{{ lemma.props.hasOwnProperty('mls:hasEndDate') ? lemma.props['mls:hasEndDate'].strval : '?' }}</td>
+        </tr>
+    </table>
+    
+    <paging
+        v-bind:nitems="nitems"
+        v-bind:pagesize="25"
+        v-bind:ch="startch"
+        v-bind:select_page="getPage"></paging>
+    </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+    name: 'lemmata',
     data: function() {
-        return {
+       return {
             alphabet: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
                 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
             nitems: 0,
             pagesize: 25,
             startch: 'a',
             lemmata: [],
-        }
+        } 
     },
     methods: {
-         getPage: function(ch, page)  {
+        getPage: function(ch, page)  {
             axios({
                 method: 'post',
                 url: 'https://api.dasch.swiss/v2/searchextended',
@@ -45,27 +72,6 @@ Vue.component('lemmata', {
     },
     mounted () {
         this.getStartPage('A', 0);
-    },
-    template: `
-    <div>
-    <button v-for="c in alphabet" v-on:click="getStartPage(c)">{{ c }}</button>
-    <div>Found {{ nitems }} items</div>
-    <table>
-        <tr><th>Lemma</th><th>Von</th><th>Bis</th></tr>
-        <tr v-on:click="gotoLemma(lemma.iri)"
-            v-for="lemma in lemmata"
-            v-bind:key="lemma.iri">
-            <td>{{ lemma.props['mls:hasLemmaText'].strval }}</td>
-            <td>{{ lemma.props.hasOwnProperty('mls:hasStartDate') ? lemma.props['mls:hasStartDate'].strval : '?' }}</td>
-            <td>{{ lemma.props.hasOwnProperty('mls:hasEndDate') ? lemma.props['mls:hasEndDate'].strval : '?' }}</td>
-        </tr>
-    </table>
-    
-    <paging
-        v-bind:nitems="nitems"
-        v-bind:pagesize="25"
-        v-bind:ch="startch"
-        v-bind:select_page="getPage"></paging>
-    </div>
-    `
-})
+    }
+}
+</script>
