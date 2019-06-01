@@ -1,4 +1,13 @@
-Vue.component('paging', {
+<template>
+<div>
+    Pages:
+    <button v-for="n in npages" v-bind:key="n" v-on:click="doSelect(ch, n)">{{ n }}</button>
+    <div>{{ nitems }}</div>
+</div>
+</template>
+
+<script>
+export default {
     data: function() {
         return {
             active_page: 1,
@@ -20,11 +29,6 @@ Vue.component('paging', {
         doSelect: function(ch, n) {
             this.select_page(ch, n - 1);
         }
-    },
-    template: `
-    <div>Pages: 
-        <button v-for="n in npages" v-bind:key="n" v-on:click="doSelect(ch, n)">{{ n }}</button>
-        <div>{{ nitems }}</div>
-    </div>
-    `
-})
+    }
+}
+</script>

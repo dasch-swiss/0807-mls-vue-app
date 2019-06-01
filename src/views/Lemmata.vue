@@ -23,6 +23,9 @@
 
 <script>
 import axios from 'axios';
+import router from '@/router'
+import {simplify} from '../lib/gravsearch_simplifier'
+import {lemmata_query} from '../lib/queries'
 
 export default {
     name: 'lemmata',
@@ -61,7 +64,7 @@ export default {
             }).then(
                 response => (this.nitems = response.data['schema:numberOfItems'])
             ).catch(function (error) {
-                console.log(error);
+                console.log(error)
             })
             this.getPage(ch, 0);
         },

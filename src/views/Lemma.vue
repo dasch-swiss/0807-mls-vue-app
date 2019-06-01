@@ -12,6 +12,7 @@
 
 <script>
 import axios from 'axios';
+import gravsearch_simplifier from '../lib/gravsearch_simplifier'
 
 export default {
     name: 'lemma',

@@ -1,4 +1,4 @@
-function simplify_resource(resdata) {
+export function simplify_resource(resdata) {
     let resource = {};
     resource.props = {};
     for (const prop in resdata) {
@@ -15,12 +15,10 @@ function simplify_resource(resdata) {
             default: resource.props[prop] = simplify_property(resdata[prop]);
         }
     }
-
-
     return resource;
 }
 
-function simplify_property(propdata) {
+export function simplify_property(propdata) {
     let property = {};
     for (const propfield in propdata) {
         switch(propfield) {
@@ -30,15 +28,14 @@ function simplify_property(propdata) {
             case 'knora-api:hasPermissions': break;
             case 'knora-api:valueAsString': property.strval = propdata[propfield]; break;
             case 'knora-api:listValueAsListNodeLabel': property.strval = propdata[propfield]; break;
-            case 'knora-api:attachedToUser': break;
             case 'knora-api:valueCreationDate': break;
-            default: ;
+            default: 
         }
     }
     return property;
 }
 
-function simplify(data) {
+export function simplify(data) {
     let resources = [];
     for (const res of data['@graph']) {
         resources.push(simplify_resource(res));

@@ -1,18 +1,21 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img alt="Vue logo" src="../assets/mls-logo.svg">
+    <h1> Musikgeschichte der Schweiz auf einen Klick: Das Musiklexikon der Schweiz (MLS)</h1>
+    <p>
+      Warum ein neues Musiklexikon? Die Schweiz verfügt im Gegensatz zu anderen europäischen Ländern über kein modernes
+      Nachschlagewerk zur Musikgeschichte. Die bestehenden Lexika sind veraltet und werden der Vielfalt und dem Reichtum
+      des Musiklebens der Schweiz nicht gerecht. Ein neues, wissenschaftlich fundiertes Musiklexikon wird schon seit
+      Jahrzehnten verlangt. Diese Forderung nach fundiertem Wissen über die Schweizer Musik hat mit dem 2012 in die
+      Bundesverfassung aufgenommenen Artikel 67a zur Stärkung der musikalischen Bildung eine neue Aktualität gewonnen:
+      Um die neue Verfassungsbestimmung umzusetzen braucht es ein zeitgemässes Informationssystem zur Schweizer
+      Musikgeschichte auf wissenschaftlicher Basis.
+    </p>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
-  name: 'home',
-  components: {
-    HelloWorld
-  }
+  name: 'home'
 }
 </script>

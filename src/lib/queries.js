@@ -1,4 +1,6 @@
-const lemmata_query = doT.template(`
+import doT from 'dot'
+
+export const lemmata_query = doT.template(`
 PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
 PREFIX mls: <http://api.dasch.swiss:443/ontology/0807/mls/simple/v2#>
 CONSTRUCT {
