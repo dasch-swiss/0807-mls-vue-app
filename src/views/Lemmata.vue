@@ -27,6 +27,7 @@ import axios from 'axios';
 import router from '@/router'
 import {simplify} from '@/lib/gravsearch_simplifier'
 import {lemmata_query} from '@/lib/queries'
+import paging from '@/components/Paging'
 
 export default {
     name: 'lemmata',
@@ -39,6 +40,9 @@ export default {
             startchar: 'a',
             lemmata: [],
         } 
+    },
+    components: {
+        paging
     },
     methods: {
         getPage: function(ch, page)  {
