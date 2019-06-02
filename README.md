@@ -1,28 +1,41 @@
 # mls-vue-app
 
-## Project setup
-```
-yarn install
+## Install Yarn if not present
+
+```bash
+$ brew install yarn
 ```
 
-### Compiles and hot-reloads for development
+## Project setup
+
+```bash
+$ yarn install
 ```
-yarn serve
+
+## Usage
+
+### Compiles and hot-reloads for development
+
+```bash
+$ yarn serve
 ```
 
 ### Compiles and minifies for production
-```
-yarn build
+
+```bash
+$ yarn build
 ```
 
 ### Run your tests
-```
-yarn test
+
+```bash
+$ yarn test
 ```
 
 ### Lints and fixes files
-```
-yarn lint
+
+```bash
+$ yarn lint
 ```
 
 ### Customize configuration
