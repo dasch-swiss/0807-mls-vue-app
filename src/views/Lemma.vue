@@ -12,7 +12,7 @@
 
 <script>
 import axios from 'axios';
-import {simplify_resource} from '@/lib/gravsearch_simplifier'
+import {simplify_resource} from '../lib/jsonld_simplifier';
 
 export default {
     name: 'lemma',

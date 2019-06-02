@@ -4,6 +4,8 @@ import Home from '@/views/Home.vue'
 import Projects from '@/views/Projects.vue'
 import Lemmata from '@/views/Lemmata.vue'
 import Lemma from '@/views/Lemma.vue'
+import Lexicons from '@/views/Lexicons.vue'
+import Lexicon from '@/views/Lexicon.vue'
 
 Vue.use(Router)
 
@@ -31,6 +33,15 @@ export default new Router({
       name: 'lemma',
       component: Lemma
     },
-    
+    {
+      path: '/lexicons',
+      name: 'lexicons',
+      component: Lexicons
+    },
+    {
+      path: '/lexicon/:iri',
+      name: 'lexicon',
+      component: Lexicon
+    }
   ]
 })

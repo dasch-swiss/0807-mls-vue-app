@@ -24,10 +24,10 @@
 
 <script>
 import axios from 'axios';
-import router from '@/router'
-import {simplify} from '@/lib/gravsearch_simplifier'
-import {lemmata_query} from '@/lib/queries'
-import paging from '@/components/Paging'
+import router from '../router';
+import {simplify_data} from '../lib/jsonld_simplifier';
+import {lemmata_query} from '../lib/queries';
+import paging from '../components/Paging';
 
 export default {
     name: 'lemmata',
@@ -52,7 +52,7 @@ export default {
                 header: {'Content-Type': 'text/plain; charset=utf-8'},
                 data: lemmata_query({page: page, start: ch})
             }).then(
-                response => (this.lemmata = simplify(response.data))
+                response => (this.lemmata = simplify_data(response.data))
             ).catch(function (error) {
                 console.log(error);
             })
