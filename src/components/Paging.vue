@@ -1,4 +1,14 @@
-Vue.component('paging', {
+<template>
+<div>
+    Pages:
+    <button v-for="n in npages" v-bind:key="n" v-on:click="doSelect(character, n)">{{ n }}</button>
+    <div>{{ nitems }}</div>
+</div>
+</template>
+
+<script>
+export default {
+    name: 'paging',
     data: function() {
         return {
             active_page: 1,
@@ -9,7 +19,7 @@ Vue.component('paging', {
     props: {
         nitems: Number,
         pagesize: Number,
-        ch: String,
+        character: String,
         select_page: Function
     },
     beforeUpdate () {
@@ -17,14 +27,9 @@ Vue.component('paging', {
         this.key++;
     },
     methods: {
-        doSelect: function(ch, n) {
-            this.select_page(ch, n - 1);
+        doSelect: function(character, n) {
+            this.select_page(character, n - 1);
         }
-    },
-    template: `
-    <div>Pages: 
-        <button v-for="n in npages" v-bind:key="n" v-on:click="doSelect(ch, n)">{{ n }}</button>
-        <div>{{ nitems }}</div>
-    </div>
-    `
-})
+    }
+}
+</script>
