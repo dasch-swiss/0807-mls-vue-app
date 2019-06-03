@@ -15,13 +15,13 @@
             <td>{{ lemma.props.hasOwnProperty('mls:hasEndDate') ? lemma.props['mls:hasEndDate'][0].strval : '?' }}</td>
         </tr>
     </table>
+    <v-pagination
+            v-model="page"
+            :length="npages"
+            value="page"
+            v-on:input="page_changed_to">
+    </v-pagination>
 
-    <paging
-        v-bind:nitems="nitems"
-        v-bind:pagesize="pagesize"
-        v-bind:character="startchar"
-        v-bind:select_page="getPage">
-    </paging>
 </div>
 </template>
 
@@ -30,30 +30,37 @@ import axios from 'axios';
 import router from '../router';
 import {simplify_data} from '../lib/jsonld_simplifier';
 import {lemmata_query} from '../lib/queries';
-import alphabetindex from '../components/Alphabetindex';
-import paging from '../components/PagingComponent';
+import alphabetindex from '../components/AlphabetindexComponent';
 
 export default {
     name: 'lemmata',
     data: function() {
        return {
            startchar: 'A',
-           page: 0,
+           page: 1,
            nitems: 0,
            pagesize: 25,
            lemmata: [],
         } 
     },
+    computed: {
+        npages: function() {
+            return Math.ceil(this.nitems / this.pagesize);
+        }
+    },
+
     components: {
         alphabetindex,
         paging
     },
     methods: {
+        page_changed_to: function(pagenum) {
+           this.page = pagenum;
+           this.getPage(this.startchar, this.page - 1);
+
+        },
         startchar_changed: function(val) {
             this.startchar = val;
-        },
-        page_changed: function(val) {
-            this.page = val;
         },
         getPage: function(ch, page)  {
             axios({
@@ -88,7 +95,7 @@ export default {
         }
     },
     mounted () {
-        this.getStartPage(this.startchar, this.page);
+        this.getStartPage(this.startchar, this.page - 1);
     }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button v-for="c in alphabet" v-on:click="char_selected(c)" v-bind:key="c">{{ c }}</button>
+        <v-btn fab="TRUE" small="TRUE" v-for="c in alphabet" v-on:click="char_selected(c)" v-bind:key="c">{{ c }}</v-btn>
     </div>
 </template>
 
