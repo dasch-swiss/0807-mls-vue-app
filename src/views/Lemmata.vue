@@ -50,8 +50,7 @@ export default {
     },
 
     components: {
-        alphabetindex,
-        paging
+        alphabetindex
     },
     methods: {
         page_changed_to: function(pagenum) {
