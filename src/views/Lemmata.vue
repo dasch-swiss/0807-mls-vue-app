@@ -13,12 +13,12 @@
         </tr>
     </table>
 
-    <paging
+    <PagingComponent
         v-bind:nitems="nitems"
         v-bind:pagesize="25"
         v-bind:character="startchar"
         v-bind:select_page="getPage">
-    </paging>
+    </PagingComponent>
 </div>
 </template>
 
@@ -27,7 +27,7 @@ import axios from 'axios';
 import router from '../router';
 import {simplify_data} from '../lib/jsonld_simplifier';
 import {lemmata_query} from '../lib/queries';
-import paging from '../components/Paging';
+import PagingComponent from '../components/PagingComponent';
 
 export default {
     name: 'lemmata',
@@ -42,7 +42,7 @@ export default {
         } 
     },
     components: {
-        paging
+        PagingComponent
     },
     methods: {
         getPage: function(ch, page)  {

@@ -1,23 +1,32 @@
 <template>
-  <div id="app">
-    <div id="nav">
+  <v-app>
+    <v-toolbar app>
+      <v-toolbar-title class="headline text-uppercase">
+        <span>Vuetify</span>
+        <span class="font-weight-light">MATERIAL DESIGN</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn
+        flat
+        href="https://github.com/vuetifyjs/vuetify/releases/latest"
+        target="_blank"
+      >
+        <span class="mr-2">Latest Release</span>
+      </v-btn>
+    </v-toolbar>
+
+    <v-content>
       <router-link to="/">Home</router-link> |
       <router-link to="/projects">Projekte</router-link> |
       <router-link to="/lexicons">Lexika</router-link> |
       <router-link to="/lemmata">Lemmata</router-link> |
-      
-    </div>
-    <router-view/>
-  </div>
+      <router-link to="/helloworld">HelloWorld</router-link>
+
+      <div>
+        <router-view/>
+      </div>
+    </v-content>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+

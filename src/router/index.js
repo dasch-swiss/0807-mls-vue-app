@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/Home.vue'
-import Projects from '@/views/Projects.vue'
-import Lemmata from '@/views/Lemmata.vue'
-import Lemma from '@/views/Lemma.vue'
-import Lexicons from '@/views/Lexicons.vue'
-import Lexicon from '@/views/Lexicon.vue'
+import Home from '../views/Home'
+import Projects from '../views/Projects'
+import Lemmata from '../views/Lemmata'
+import Lemma from '../views/Lemma'
+import Lexicons from '../views/Lexicons'
+import Lexicon from '../views/Lexicon'
+import HelloWorldPage from '../views/HelloWorldPage'
 
 Vue.use(Router)
 
@@ -42,6 +43,11 @@ export default new Router({
       path: '/lexicon/:iri',
       name: 'lexicon',
       component: Lexicon
+    },
+    {
+      path: '/helloworld',
+      name: 'HelloWorldPage',
+      component: HelloWorldPage
     }
   ]
 })
