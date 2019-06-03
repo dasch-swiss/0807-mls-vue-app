@@ -1,24 +1,27 @@
 <template> 
 <div>
-    <button v-for="c in alphabet" v-on:click="getStartPage(c)" v-bind:key="c">{{ c }}</button>
-    <div>Found {{ nitems }} items</div>
+    <alphabetindex v-on:char_selected="startchar_changed"
+                   v-bind:startchar="startchar"
+                   v-bind:getData="getStartPage">
+    </alphabetindex>
+    <div>{{ nitems }} Einträge gefunden</div>
     <table>
         <tr><th>Lemma</th><th>Von</th><th>Bis</th></tr>
         <tr v-on:click="gotoLemma(lemma.iri)"
             v-for="lemma in lemmata"
             v-bind:key="lemma.iri">
-            <td>{{ lemma.props['mls:hasLemmaText'].strval }}</td>
-            <td>{{ lemma.props.hasOwnProperty('mls:hasStartDate') ? lemma.props['mls:hasStartDate'].strval : '?' }}</td>
-            <td>{{ lemma.props.hasOwnProperty('mls:hasEndDate') ? lemma.props['mls:hasEndDate'].strval : '?' }}</td>
+            <td>{{ lemma.props['mls:hasLemmaText'][0].strval }}</td>
+            <td>{{ lemma.props.hasOwnProperty('mls:hasStartDate') ? lemma.props['mls:hasStartDate'][0].strval : '?' }}</td>
+            <td>{{ lemma.props.hasOwnProperty('mls:hasEndDate') ? lemma.props['mls:hasEndDate'][0].strval : '?' }}</td>
         </tr>
     </table>
 
-    <PagingComponent
+    <paging
         v-bind:nitems="nitems"
-        v-bind:pagesize="25"
+        v-bind:pagesize="pagesize"
         v-bind:character="startchar"
         v-bind:select_page="getPage">
-    </PagingComponent>
+    </paging>
 </div>
 </template>
 
@@ -27,24 +30,31 @@ import axios from 'axios';
 import router from '../router';
 import {simplify_data} from '../lib/jsonld_simplifier';
 import {lemmata_query} from '../lib/queries';
-import PagingComponent from '../components/PagingComponent';
+import alphabetindex from '../components/Alphabetindex';
+import paging from '../components/PagingComponent';
 
 export default {
     name: 'lemmata',
     data: function() {
        return {
-            alphabet: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                       'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-            nitems: 0,
-            pagesize: 25,
-            startchar: 'a',
-            lemmata: [],
+           startchar: 'A',
+           page: 0,
+           nitems: 0,
+           pagesize: 25,
+           lemmata: [],
         } 
     },
     components: {
-        PagingComponent
+        alphabetindex,
+        paging
     },
     methods: {
+        startchar_changed: function(val) {
+            this.startchar = val;
+        },
+        page_changed: function(val) {
+            this.page = val;
+        },
         getPage: function(ch, page)  {
             axios({
                 method: 'post',
@@ -58,9 +68,8 @@ export default {
             })
         },
 
-        getStartPage: function(ch) {
-            this.startch = ch;
-            this.nitems = 5;
+        getStartPage: function(ch, page = 0) {
+            this.startchar = ch;
             axios({
                 method: 'post',
                 url: 'https://api.dasch.swiss/v2/searchextended/count',
@@ -70,8 +79,8 @@ export default {
                 response => (this.nitems = response.data['schema:numberOfItems'])
             ).catch(function (error) {
                 console.log(error)
-            })
-            this.getPage(ch, 0);
+            });
+            this.getPage(ch, page);
         },
 
         gotoLemma: function(iri) {
@@ -79,7 +88,7 @@ export default {
         }
     },
     mounted () {
-        this.getStartPage('A', 0);
+        this.getStartPage(this.startchar, this.page);
     }
 }
 </script>

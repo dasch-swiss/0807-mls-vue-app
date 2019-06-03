@@ -43,3 +43,31 @@ export function lexicons_query(params) {
     ORDER BY ASC(?text)
   `)(params);
 }
+
+export function lexlemma_query(params) {
+  return doT.template(`
+    PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+    PREFIX mls: <http://api.dasch.swiss:443/ontology/0807/mls/simple/v2#>
+    CONSTRUCT {
+        ?lexicon knora-api:isMainResource true .
+        ?article mls:hasALinkToLemma ?lemma .
+        ?lemma mls:hasLemmaText ?text .
+        ?article mls:hasALinkToLexicon ?lexicon .
+        ?article mls:hasArticleText ?arttext .
+        ?lexicon mls:hasShortname ?shortname .
+        ?lexicon mls:hasCitationForm ?citation .
+    } WHERE {
+        BIND(<{{=it.lemma_iri}}> AS ?lemma)
+        ?article a knora-api:Resource .
+        ?article a mls:Article .
+        ?article mls:hasALinkToLemma ?lemma .
+        ?lemma mls:hasLemmaText ?text .
+        ?lexicon a knora-api:Resource .
+        ?lexicon a mls:Lexicon .
+        ?article mls:hasALinkToLexicon ?lexicon .
+        OPTIONAL { ?article mls:hasArticleText ?arttext . }
+        OPTIONAL { ?lexicon mls:hasShortname ?shortname . }
+        OPTIONAL { ?lexicon mls:hasCitationForm ?citation . }
+    }
+  `)(params)
+}

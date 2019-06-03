@@ -5,8 +5,8 @@
     <tr v-on:click="gotoLexicon(lexicon.iri)"
       v-for="lexicon in lexicons"
       v-bind:key="lexicon.iri">
-      <td>{{ lexicon.props['mls:hasCitationForm'].strval }}</td>
-      <td>{{ lexicon.props.hasOwnProperty('mls:hasYear') ? lexicon.props['mls:hasYear'].strval : '?' }}</td>
+      <td>{{ lexicon.props['mls:hasCitationForm'][0].strval }}</td>
+      <td>{{ lexicon.props.hasOwnProperty('mls:hasYear') ? lexicon.props['mls:hasYear'][0].strval : '?' }}</td>
     </tr>
   </table>
   </div>

@@ -1,8 +1,7 @@
 <template>
 <div>
-    Pages:
+    Seiten:
     <button v-for="n in npages" v-bind:key="n" v-on:click="doSelect(character, n)">{{ n }}</button>
-    <div>{{ nitems }}</div>
 </div>
 </template>
 
@@ -11,8 +10,6 @@ export default {
     name: 'paging',
     data: function() {
         return {
-            active_page: 1,
-            npages: 1,
             key: 0
         }
     },
@@ -22,13 +19,15 @@ export default {
         character: String,
         select_page: Function
     },
-    beforeUpdate () {
-        this.npages = Math.ceil(this.nitems / this.pagesize);
-        this.key++;
+    computed: {
+        npages: function() {
+            return Math.ceil(this.nitems / this.pagesize);
+        }
     },
     methods: {
         doSelect: function(character, n) {
             this.select_page(character, n - 1);
+            this.$emit('page_selected', n - 1);
         }
     }
 }
