@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <v-card-actions>
         <v-btn-toggle v-model="toggle_exclusive">
-        <v-btn fab small v-for="c in alphabet" v-on:click="char_selected(c)" v-bind:key="c">{{ c }}</v-btn>
+            <v-btn small v-for="c in alphabet" v-on:click="char_selected(c)" v-bind:key="c">{{ c }}</v-btn>
         </v-btn-toggle>
-    </div>
+    </v-card-actions>
 </template>
 
 <script>
@@ -12,7 +12,8 @@
         data: function() {
             return {
                 alphabet: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L','M',
-                    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+                    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+                toggle_exclusive: 0,
             }
         },
         props: {
