@@ -26,9 +26,7 @@
         >
             <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
             <template v-slot:items="props">
-                <td>{{ props.item.props['mls:hasLemmaText'][0].strval }}</td>
-                <td>{{ props.item.props.hasOwnProperty('mls:hasStartDate') ? props.item.props['mls:hasStartDate'][0].strval : '?'}}</td>
-                <td>{{ props.item.props.hasOwnProperty('mls:hasEndDate') ? props.item.props['mls:hasEndDate'][0].strval : '?'}}</td>
+                <td>{{ props.item.props['mls:hasLemmaText'][0].strval }} ({{ props.item.props.hasOwnProperty('mls:hasStartDate') ? props.item.props['mls:hasStartDate'][0].strval : '?'}} - {{ props.item.props.hasOwnProperty('mls:hasEndDate') ? props.item.props['mls:hasEndDate'][0].strval : '?'}})</td>
             </template>
         </v-data-table>
         <v-pagination
@@ -60,8 +58,6 @@
         isloading: false,
         headers: [
           {name: "Lemma", value: "props['mls:hasLemmaText'][0].strval"},
-          {name: "Von", value: "props['mls:hasStartDate'][0].strval"},
-          {name: "Bis", value: "props['mls:hasEndDate'][0].strval"}
         ]
       }
     },
