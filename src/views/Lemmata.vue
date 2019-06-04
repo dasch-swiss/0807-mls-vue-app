@@ -73,9 +73,9 @@ export default {
                 console.log(error);
             })
         },
-
         getStartPage: function(ch, page = 0) {
             this.startchar = ch;
+            this.page = page + 1;
             axios({
                 method: 'post',
                 url: 'https://api.dasch.swiss/v2/searchextended/count',
