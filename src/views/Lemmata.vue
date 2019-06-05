@@ -20,7 +20,7 @@
                     append-icon="search"
                     label="Suche"
                     single-line
-                    v-on:change="gaga"
+                    v-on:change="do_search"
                     hide-details></v-text-field>
         </v-card-title>
         <alphabetindex v-on:char_selected="startchar_changed"
@@ -58,12 +58,14 @@
     import router from '../router';
     import {simplify_data} from '../lib/jsonld_simplifier';
     import {lemmata_query} from '../lib/queries';
+    import {lemmata_search} from '../lib/queries';
     import alphabetindex from '../components/AlphabetindexComponent';
 
     export default {
         name: 'lemmata',
         data: function() {
             return {
+                search: '',
                 startchar: 'A',
                 page: 1,
                 nitems: 0,
@@ -86,8 +88,33 @@
             alphabetindex
         },
         methods: {
-            gaga: function(val) {
-                console.log(val);
+            do_search: function(searchterm) {
+                this.loading = true;
+                axios({
+                    method: 'post',
+                    url: 'https://api.dasch.swiss/v2/searchextended/count',
+                    header: {'Content-Type': 'text/plain; charset=utf-8'},
+                    data: lemmata_search({searchterm: searchterm, page: 0})
+                }).then(
+                        response => (this.nitems = response.data['schema:numberOfItems'])
+                ).catch(function (error) {
+                    console.log(error)
+                });
+                axios({
+                    method: 'post',
+                    url: 'https://api.dasch.swiss/v2/searchextended',
+                    header: {'Content-Type': 'text/plain; charset=utf-8'},
+                    data: lemmata_search({searchterm: searchterm, page: 0})
+                }).then(
+                        response => {this.lemmata = simplify_data(response.data).map(x => ({
+                            iri: x.iri,
+                            lemma: x.props.hasOwnProperty('mls:hasLemmaText') ? x.props['mls:hasLemmaText'][0].strval : '-',
+                            from: x.props.hasOwnProperty('mls:hasStartDate') ? x.props['mls:hasStartDate'][0].strval : '?',
+                            to: x.props.hasOwnProperty('mls:hasEndDate') ? x.props['mls:hasEndDate'][0].strval : '?'
+                        })); this.loading = false; console.log(this.lemmata);}
+                ).catch(function (error) {
+                    console.log(error);
+                })
             },
             page_changed_to: function(pagenum) {
                 this.page = pagenum;

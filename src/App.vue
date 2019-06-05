@@ -2,8 +2,8 @@
   <v-app>
     <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
+        <!-- <span>Vuetify</span> -->
+        <span class="font-weight-light">Musiklexikon der Schweiz (MLS)</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
@@ -17,7 +17,7 @@
 
     <v-content>
       <router-link to="/">Home</router-link> |
-      <router-link to="/projects">Projekte</router-link> |
+      <!-- <router-link to="/projects">Projekte</router-link> | -->
       <router-link to="/lexicons">Lexika</router-link> |
       <router-link to="/lemmata">Lemmata</router-link> |
       <router-link to="/helloworld">HelloWorld</router-link>
