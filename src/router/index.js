@@ -6,6 +6,7 @@ import Lemmata from '../views/Lemmata'
 import Lemma from '../views/Lemma'
 import Lexicons from '../views/Lexicons'
 import Lexicon from '../views/Lexicon'
+import Article from '../views/Article'
 import HelloWorldPage from '../views/HelloWorldPage'
 
 Vue.use(Router)
@@ -43,6 +44,11 @@ export default new Router({
       path: '/lexicon/:iri',
       name: 'lexicon',
       component: Lexicon
+    },
+    {
+      path: '/article/:iri',
+      name: 'article',
+      component: Article
     },
     {
       path: '/helloworld',

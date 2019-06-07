@@ -1,6 +1,6 @@
 <template>
     <v-card-actions>
-        <v-btn-toggle v-model="toggle_exclusive">
+        <v-btn-toggle :value="toggle_exclusive">
             <v-btn small v-for="c in alphabet" v-on:click="char_selected(c)" v-bind:key="c">{{ c }}</v-btn>
         </v-btn-toggle>
     </v-card-actions>
@@ -13,12 +13,16 @@
             return {
                 alphabet: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L','M',
                     'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-                toggle_exclusive: 0,
             }
         },
         props: {
             startchar: String,
             getData: Function
+        },
+        computed: {
+            toggle_exclusive: function() {
+                return this.startchar.charCodeAt(0) - 'A'.charCodeAt(0);
+            }
         },
         methods: {
             char_selected: function(c) {
@@ -26,10 +30,6 @@
                 this.$emit('char_selected', c)
             }
         },
-        mounted () {
-            this.toggle_exclusive = this.startchar.charCodeAt(0) - 'A'.charCodeAt(0);
-            //alert(this.toggle_exclusive);
-        }
     }
 </script>
 

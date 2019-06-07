@@ -1,11 +1,11 @@
 <template>
     <div>
         <table>
-            <tr><td>Kürzel</td><td>:</td><td>{{lexicon.hasOwnProperty('mls:hasShortname') ? lexicon.props['mls:hasShortname'].strval : '?' }}</td></tr>
-            <tr><td>Zitierform</td><td>:</td><td>{{lexicon.hasOwnProperty('mls:hasCitationForm') ? lexicon.props['mls:hasCitationForm'].strval : '?' }}</td></tr>
-            <tr><td>Jahr</td><td>:</td><td>{{lexicon.hasOwnProperty('mls:hasYear') ?  lexicon.props['mls:hasYear'].strval : '?' }}</td></tr>
-            <tr><td>Kommentar</td><td>:</td><td>{{lexicon.hasOwnProperty('mls:hasLexiconComment') ? lexicon.props['mls:hasLexiconComment'].strval : '?' }}</td></tr>
-            <tr><td>Link KVK</td><td>:</td><td>{{lexicon.hasOwnProperty('mls:hasLexiconWebLink') ? lexicon.props['mls:hasLexiconWebLink'].strval : '?' }}</td></tr>
+            <tr><td>Kürzel</td><td>:</td><td>{{lexicon.props.hasOwnProperty('mls:hasShortname') ? lexicon.props['mls:hasShortname'][0].strval : '?' }}</td></tr>
+            <tr><td>Zitierform</td><td>:</td><td>{{lexicon.props.hasOwnProperty('mls:hasCitationForm') ? lexicon.props['mls:hasCitationForm'][0].strval : '?' }}</td></tr>
+            <tr><td>Jahr</td><td>:</td><td>{{lexicon.props.hasOwnProperty('mls:hasYear') ?  lexicon.props['mls:hasYear'][0].strval : '?' }}</td></tr>
+            <tr><td>Kommentar</td><td>:</td><td>{{lexicon.props.hasOwnProperty('mls:hasLexiconComment') ? lexicon.props['mls:hasLexiconComment'][0].strval : '?' }}</td></tr>
+            <tr><td>Link KVK</td><td>:</td><td>{{lexicon.props.hasOwnProperty('mls:hasLexiconWebLink') ? lexicon.props['mls:hasLexiconWebLink'][0].strval : '?' }}</td></tr>
         </table>
     </div>
 </template>
@@ -34,7 +34,7 @@ export default {
         }
     },
     mounted () {
-        alert(this.$route.params.iri);
+        //alert(this.$route.params.iri);
         this.getLexiconData(this.$route.params.iri);
     }
 }

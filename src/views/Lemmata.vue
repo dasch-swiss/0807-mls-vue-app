@@ -85,7 +85,6 @@
                 return Math.ceil(this.nitems / this.pagesize);
             }
         },
-
         components: {
             alphabetindex
         },
