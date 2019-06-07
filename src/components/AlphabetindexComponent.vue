@@ -25,6 +25,10 @@
                 this.getData(c);
                 this.$emit('char_selected', c)
             }
+        },
+        mounted () {
+            this.toggle_exclusive = this.startchar.charCodeAt(0) - 'A'.charCodeAt(0);
+            //alert(this.toggle_exclusive);
         }
     }
 </script>

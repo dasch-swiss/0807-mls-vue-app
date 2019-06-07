@@ -23,7 +23,8 @@
                     v-on:change="do_search"
                     hide-details></v-text-field>
         </v-card-title>
-        <alphabetindex v-on:char_selected="startchar_changed"
+        <alphabetindex v-if="show_alpha"
+                       v-on:char_selected="startchar_changed"
                        v-bind:startchar="startchar"
                        v-bind:getData="getStartPage">
         </alphabetindex>
@@ -76,6 +77,7 @@
                 headers: [
                     {text: "Lemma", value: "lemma", sortable: false},
                 ],
+                show_alpha: true
             }
         },
         computed: {
@@ -89,6 +91,7 @@
         },
         methods: {
             do_search: function(searchterm) {
+                this.show_alpha = false;
                 this.loading = true;
                 axios({
                     method: 'post',
@@ -98,7 +101,7 @@
                 }).then(
                         response => (this.nitems = response.data['schema:numberOfItems'])
                 ).catch(function (error) {
-                    console.log(error)
+                    alert.log(error)
                 });
                 axios({
                     method: 'post',
@@ -106,14 +109,17 @@
                     header: {'Content-Type': 'text/plain; charset=utf-8'},
                     data: lemmata_search({searchterm: searchterm, page: 0})
                 }).then(
-                        response => {this.lemmata = simplify_data(response.data).map(x => ({
-                            iri: x.iri,
-                            lemma: x.props.hasOwnProperty('mls:hasLemmaText') ? x.props['mls:hasLemmaText'][0].strval : '-',
-                            from: x.props.hasOwnProperty('mls:hasStartDate') ? x.props['mls:hasStartDate'][0].strval : '?',
-                            to: x.props.hasOwnProperty('mls:hasEndDate') ? x.props['mls:hasEndDate'][0].strval : '?'
-                        })); this.loading = false; console.log(this.lemmata);}
+                        response => {
+                            this.lemmata = simplify_data(response.data).map(x => ({
+                                iri: x.iri,
+                                lemma: x.props.hasOwnProperty('mls:hasLemmaText') ? x.props['mls:hasLemmaText'][0].strval : '-',
+                                from: x.props.hasOwnProperty('mls:hasStartDate') ? x.props['mls:hasStartDate'][0].strval : '?',
+                                to: x.props.hasOwnProperty('mls:hasEndDate') ? x.props['mls:hasEndDate'][0].strval : '?'
+                            }));
+                            this.loading = false;
+                        }
                 ).catch(function (error) {
-                    console.log(error);
+                    alert.log(error);
                 })
             },
             page_changed_to: function(pagenum) {
@@ -125,6 +131,7 @@
             },
             getPage: function(ch, page)  {
                 this.loading = true;
+                this.lemmata = [];
                 axios({
                     method: 'post',
                     url: 'https://api.dasch.swiss/v2/searchextended',
@@ -138,10 +145,11 @@
                             to: x.props.hasOwnProperty('mls:hasEndDate') ? x.props['mls:hasEndDate'][0].strval : '?'
                         })); this.loading = false; }
                 ).catch(function (error) {
-                    console.log(error);
+                    alert.log(error);
                 })
             },
             getStartPage: function(ch, page = 0) {
+                this.lemmata = [];
                 this.startchar = ch;
                 this.page = page + 1;
                 this.loading = true;
@@ -153,18 +161,32 @@
                 }).then(
                         response => (this.nitems = response.data['schema:numberOfItems'])
                 ).catch(function (error) {
-                    console.log(error)
+                    alert.log(error)
                 });
                 this.getPage(ch, page);
             },
-
             gotoLemma: function(iri) {
+                router.replace({name: 'lemmata', query: {alpha: this.startchar, page: this.page}});
                 router.push({ path: '/lemma/' + encodeURIComponent(iri)})
-            }
+            },
         },
         mounted () {
+            if (this.$route.query.alpha) {
+                this.startchar = this.$route.query.alpha;
+            }
+            if (this.$route.query.page) {
+                this.page = this.$route.query.page;
+            }
             this.getStartPage(this.startchar, this.page - 1);
-        }
+        },
+        beforeCreate: function() {
+            if (this.$route.query.alpha) {
+                this.startchar = this.$route.query.alpha;
+            }
+            if (this.$route.query.page) {
+                this.page = this.$route.query.page;
+            }
+        },
     }
 </script>
 

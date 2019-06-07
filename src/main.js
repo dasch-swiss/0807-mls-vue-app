@@ -28,9 +28,10 @@ const envPlugin = {
   }
 }
 
-Vue.use(envPlugin)
+Vue.use(envPlugin);
+
 
 new Vue({
   router,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');

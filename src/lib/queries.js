@@ -25,29 +25,7 @@ export function lemmata_query(params) {
     OFFSET {{=it.page}}
   `)(params);
 }
-/*
-    PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX mls: <http://api.dasch.swiss:443/ontology/0807/mls/simple/v2#>
-    CONSTRUCT {
-        ?lemma knora-api:isMainResource true .
-        ?lemma mls:hasLemmaText ?text .
-    } WHERE {
-        ?lemma a knora-api:Resource .
-        ?lemma a mls:Lemma .
-        ?lemma mls:hasLemmaText ?text .
-        {
-        	?lemma mls:hasPseudonym ?pseudo .
-        	FILTER regex(?pseudo, "andre", "i") .
-    	} UNION {
-        	FILTER regex(?text, "andre", "i") .
-    	} UNION {
-    		?lemma mls:hasVariants ?variant .
-    		FILTER regex(?variant, "andre", "i") .
-    	}
-    }
-    ORDER BY ASC(?text)
-    OFFSET 0
- */
+
 export function lemmata_search(params) {
   return doT.template(`
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>

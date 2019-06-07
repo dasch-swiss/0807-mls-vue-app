@@ -42,7 +42,6 @@
                         else {
                             data = [simplify_resource(response.data)];
                         }
-                        console.log(data)
                         this.lexlemmas = [];
                         data.forEach(lexres => {
                             let lexlemma = {};
@@ -53,7 +52,7 @@
                         });
                     }
                 ).catch(function (error) {
-                    console.log(error);
+                    alert(error);
                 })
 
             }

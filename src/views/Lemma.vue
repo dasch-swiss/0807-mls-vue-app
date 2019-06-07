@@ -68,7 +68,7 @@ export default {
                 }).then(
                 response => (this.lemma = simplify_resource(response.data))
             ).catch(function (error) {
-                console.log(error);
+                alert(error);
             })
         }
     },
