@@ -1,19 +1,15 @@
 <template>
     <div>
-        <!--
-        <table>
-            <tr><th>Lemma</th><th>Von</th><th>Bis</th></tr>
-            <tr v-on:click="gotoLemma(lemma.iri)"
-                v-for="lemma in lemmata"
-                v-bind:key="lemma.iri">
-                <td>{{ lemma.props['mls:hasLemmaText'][0].strval }}</td>
-                <td>{{ lemma.props.hasOwnProperty('mls:hasStartDate') ? lemma.props['mls:hasStartDate'][0].strval : '?' }}</td>
-                <td>{{ lemma.props.hasOwnProperty('mls:hasEndDate') ? lemma.props['mls:hasEndDate'][0].strval : '?' }}</td>
-            </tr>
-        </table>
-        -->
+        <v-card v-if="lexicon_iri">
+            <v-card-title>
+                <h3>Lexikon</h3>
+            </v-card-title>
+            <lexicon v-bind:iri="lexicon_iri">
+            </lexicon>
+        </v-card>
         <v-card-title>
-            Lemmata
+            <h3 v-if="lexicon_iri">Lemmata in Lexikon:</h3>
+            <h3 v-else>Lemmata</h3>
             <v-spacer></v-spacer>
             <v-text-field
                     v-model="search"
@@ -21,7 +17,8 @@
                     label="Suche"
                     single-line
                     v-on:change="do_search"
-                    hide-details></v-text-field>
+                    hide-details>
+            </v-text-field>
         </v-card-title>
         <alphabetindex v-if="show_alpha"
                        v-on:char_selected="startchar_changed"
@@ -36,7 +33,7 @@
                 :headers="headers"
                 :items="lemmata"
                 :total-items="nitems"
-                hide-actions
+                hide-actions hide-headers
                 :loading="loading"
                 class="elevation-1">
             <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
@@ -45,6 +42,7 @@
             </template>
         </v-data-table>
         <v-pagination
+                v-if="npages > 1"
                 v-model="page"
                 :length="npages"
                 value="page"
@@ -61,6 +59,7 @@
     import {lemmata_query} from '../lib/queries';
     import {lemmata_search} from '../lib/queries';
     import alphabetindex from '../components/AlphabetindexComponent';
+    import lexicon from '../components/LexiconComponent';
 
     export default {
         name: 'lemmata',
@@ -69,6 +68,7 @@
                 search: '',
                 startchar: 'A',
                 page: 1,
+                lexicon_iri: undefined,
                 nitems: 0,
                 pagesize: 25,
                 rpp: [25],
@@ -77,6 +77,9 @@
                 headers: [
                     {text: "Lemma", value: "lemma", sortable: false},
                 ],
+                lexicon: {
+                    props: {}
+                },
                 show_alpha: true
             }
         },
@@ -86,7 +89,8 @@
             }
         },
         components: {
-            alphabetindex
+            alphabetindex,
+            lexicon
         },
         methods: {
             do_search: function(searchterm) {
@@ -96,17 +100,19 @@
                     method: 'post',
                     url: 'https://api.dasch.swiss/v2/searchextended/count',
                     header: {'Content-Type': 'text/plain; charset=utf-8'},
-                    data: lemmata_search({searchterm: searchterm, page: 0})
+                    data: lemmata_search({searchterm: searchterm, page: 0, ...(this.lexicon_iri !== undefined && {lexicon_iri: this.lexicon_iri})})
                 }).then(
                         response => (this.nitems = response.data['schema:numberOfItems'])
                 ).catch(function (error) {
-                    alert.log(error)
+                    this.$nextTick(() => {
+                        console.log(error);
+                    })
                 });
                 axios({
                     method: 'post',
                     url: 'https://api.dasch.swiss/v2/searchextended',
                     header: {'Content-Type': 'text/plain; charset=utf-8'},
-                    data: lemmata_search({searchterm: searchterm, page: 0})
+                    data: lemmata_search({searchterm: searchterm, page: 0, ...(this.lexicon_iri !== undefined && {lexicon_iri: this.lexicon_iri})})
                 }).then(
                         response => {
                             this.lemmata = simplify_data(response.data).map(x => ({
@@ -118,7 +124,9 @@
                             this.loading = false;
                         }
                 ).catch(function (error) {
-                    alert.log(error);
+                    this.$nextTick(() => {
+                        console.log(error);
+                    })
                 })
             },
             page_changed_to: function(pagenum) {
@@ -135,7 +143,7 @@
                     method: 'post',
                     url: 'https://api.dasch.swiss/v2/searchextended',
                     header: {'Content-Type': 'text/plain; charset=utf-8'},
-                    data: lemmata_query({page: page, start: ch})
+                    data: lemmata_query({page: page, start: ch, ...(this.lexicon_iri !== undefined && {lexicon_iri: this.lexicon_iri})})
                 }).then(
                         response => {this.lemmata = simplify_data(response.data).map(x => ({
                             iri: x.iri,
@@ -144,7 +152,9 @@
                             to: x.props.hasOwnProperty('mls:hasEndDate') ? x.props['mls:hasEndDate'][0].strval : '?'
                         })); this.loading = false; }
                 ).catch(function (error) {
-                    alert.log(error);
+                    this.$nextTick(() => {
+                        console.log(error);
+                    })
                 })
             },
             getStartPage: function(ch, page = 0) {
@@ -156,16 +166,18 @@
                     method: 'post',
                     url: 'https://api.dasch.swiss/v2/searchextended/count',
                     header: {'Content-Type': 'text/plain; charset=utf-8'},
-                    data: lemmata_query({page: 0, start: ch})
+                    data: lemmata_query({page: 0, start: ch, ...(this.lexicon_iri !== undefined && {lexicon_iri: this.lexicon_iri})})
                 }).then(
                         response => (this.nitems = response.data['schema:numberOfItems'])
                 ).catch(function (error) {
-                    alert.log(error)
+                    this.$nextTick(() => {
+                        console.log(error);
+                    })
                 });
                 this.getPage(ch, page);
             },
             gotoLemma: function(iri) {
-                router.replace({name: 'lemmata', query: {alpha: this.startchar, page: this.page}});
+                router.replace({name: 'lemmata', query: {alpha: this.startchar, page: this.page, ...(this.lexicon_iri !== undefined && {lexicon: this.lexicon_iri})}});
                 router.push({ path: '/lemma/' + encodeURIComponent(iri)})
             },
         },
@@ -176,6 +188,9 @@
             if (this.$route.query.page) {
                 this.page = this.$route.query.page;
             }
+            if (this.$route.query.lexicon) {
+                this.lexicon_iri = this.$route.query.lexicon;
+            }
             this.getStartPage(this.startchar, this.page - 1);
         },
         beforeCreate: function() {
@@ -184,6 +199,9 @@
             }
             if (this.$route.query.page) {
                 this.page = this.$route.query.page;
+            }
+            if (this.$route.query.lexicon) {
+                this.lexicon_iri = this.$route.query.lexicon;
             }
         },
     }
