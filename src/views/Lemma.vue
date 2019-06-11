@@ -43,8 +43,10 @@
                 </tr>
             </table>
             <div>Erscheint in:</div>
-            <lexfromlemma v-bind:lemmairi="this.$route.params.iri"></lexfromlemma>
-        </v-card-text>
+            <lexfromlemma v-bind:lemmairi="this.$route.params.iri"
+                          v-bind:lexiconiri="this.$route.query.lexicon">
+            </lexfromlemma>
+         </v-card-text>
     </v-card>
 </template>
 
@@ -62,23 +64,27 @@ export default {
         return {
             lemma: {
                 props: {}
+            },
+            lexicon_iri: undefined,
+            lexicon: {
+                props: {gaga: 'gaga'}
             }
         }
     },
     methods: {
-        getLemmaData: function (iri) {
+        getResourceData: function (iri) {
             axios({
                 method: 'get',
                 url: 'https://api.dasch.swiss/v2/resources/' + encodeURIComponent(iri),
                 }).then(
                 response => (this.lemma = simplify_resource(response.data))
             ).catch(function (error) {
-                alert('++' + error);
+                console.log(error);
             })
         }
     },
     mounted () {
-        this.getLemmaData(this.$route.params.iri);
+        this.getResourceData(this.$route.params.iri, 'lemma');
     }
 }
 </script>

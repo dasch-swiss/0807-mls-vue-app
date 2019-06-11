@@ -131,6 +131,9 @@ export function lexlemma_query(params) {
         ?lexicon mls:hasCitationForm ?citation .
     } WHERE {
         BIND(<{{=it.lemma_iri}}> AS ?lemma)
+        {{? it.lexicon_iri }}
+        BIND(<{{=it.lexicon_iri}}> AS ?lexicon)
+        {{?}}
         ?article a knora-api:Resource .
         ?article a mls:Article .
         ?article mls:hasALinkToLemma ?lemma .

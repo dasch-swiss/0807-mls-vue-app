@@ -32,15 +32,17 @@
             }
         },
         props: {
-            lemmairi: String
+            lemmairi: String,
+            lexiconiri: String
         },
         methods: {
-            getLexs: function(lemma_iri) {
+            getLexs: function(lemma_iri, lexicon_iri) {
+                console.log(lexicon_iri);
                 axios({
                     method: 'post',
                     url: 'https://api.dasch.swiss/v2/searchextended',
                     header: {'Content-Type': 'text/plain; charset=utf-8'},
-                    data: lexlemma_query({lemma_iri: lemma_iri})
+                    data: lexlemma_query({lemma_iri: lemma_iri, ...(lexicon_iri !== undefined && {lexicon_iri: lexicon_iri})})
                 }).then(
                     response => {
                         let tmpdata = simplify_data(response.data);
@@ -60,11 +62,16 @@
             gotoArticle: function(iri) {
                 //router.replace({name: 'lemmata', query: {alpha: this.startchar, page: this.page}});
                 router.push({ path: '/article/' + encodeURIComponent(iri)})
-            },
-
+            }
         },
         mounted () {
-            this.getLexs(this.lemmairi);
+            console.log(this.lexiconiri);
+            if (this.lexiconiri) {
+                this.getLexs(this.lemmairi, this.lexiconiri);
+            }
+            else {
+                this.getLexs(this.lemmairi);
+            }
         }
 
     }

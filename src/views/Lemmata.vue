@@ -178,8 +178,13 @@
             },
             gotoLemma: function(iri) {
                 router.replace({name: 'lemmata', query: {alpha: this.startchar, page: this.page, ...(this.lexicon_iri !== undefined && {lexicon: this.lexicon_iri})}});
-                router.push({ path: '/lemma/' + encodeURIComponent(iri)})
-            },
+                if (this.lexicon_iri === undefined) {
+                    router.push({ name: 'lemma', params: {iri}});
+                }
+                else {
+                    router.push({ name: 'lemma', params: { iri }, query: {lexicon: this.lexicon_iri}});
+                }
+            }
         },
         mounted () {
             if (this.$route.query.alpha) {
