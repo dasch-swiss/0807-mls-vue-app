@@ -1,9 +1,10 @@
 # mls-vue-app
 
-## Install Yarn if not present
+## Install Yarn and Vue-CLI if not present
 
 ```bash
 $ brew install yarn
+$ yarn global add @vue/cli
 ```
 
 ## Project setup
@@ -36,6 +37,12 @@ $ yarn test
 
 ```bash
 $ yarn lint
+```
+
+### Build for production
+
+```bash
+$ yarn build-prod
 ```
 
 ### Customize configuration
