@@ -39,5 +39,11 @@ $ yarn test
 $ yarn lint
 ```
 
+### Build for production
+
+```bash
+$ yarn build-prod
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
