@@ -68,14 +68,16 @@ export default {
             lexicon_iri: undefined,
             lexicon: {
                 props: {gaga: 'gaga'}
-            }
+            },
+            server: this.$env.get('SERVER'),
+            ontology: this.$env.get('ONTOLOGY')
         }
     },
     methods: {
         getResourceData: function (iri) {
             axios({
                 method: 'get',
-                url: 'https://api.dasch.swiss/v2/resources/' + encodeURIComponent(iri),
+                url: this.server + '/v2/resourcess/' + encodeURIComponent(iri),
                 }).then(
                 response => (this.lemma = simplify_resource(response.data))
             ).catch(function (error) {

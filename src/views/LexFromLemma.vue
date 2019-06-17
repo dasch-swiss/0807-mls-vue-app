@@ -28,7 +28,9 @@
                 }],
                 headers: [
                     {text: "Lexica", value: "lexlemma", sortable: false},
-                ]
+                ],
+                server: this.$env.get('SERVER'),
+                ontology: this.$env.get('ONTOLOGY')
             }
         },
         props: {
@@ -40,9 +42,9 @@
                 console.log(lexicon_iri);
                 axios({
                     method: 'post',
-                    url: 'https://api.dasch.swiss/v2/searchextended',
+                    url: this.server + '/v2/searchextended',
                     header: {'Content-Type': 'text/plain; charset=utf-8'},
-                    data: lexlemma_query({lemma_iri: lemma_iri, ...(lexicon_iri !== undefined && {lexicon_iri: lexicon_iri})})
+                    data: lexlemma_query({lemma_iri: lemma_iri, ...(lexicon_iri !== undefined && {lexicon_iri: lexicon_iri}), ontology: this.ontology})
                 }).then(
                     response => {
                         let tmpdata = simplify_data(response.data);

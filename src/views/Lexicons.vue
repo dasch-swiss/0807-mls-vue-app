@@ -47,7 +47,9 @@ export default {
         {text: "Weblink", value: "webLink", sortable: false},
       ],
       lexicons: [],
-    } 
+      server: this.$env.get('SERVER'),
+      ontology: this.$env.get('ONTOLOGY')
+    }
   },
   computed: {
     npages: function() {
@@ -59,9 +61,9 @@ export default {
     getAll: function(page = 0)  {
       axios({
         method: 'post',
-        url: 'https://api.dasch.swiss/v2/searchextended/count',
+        url: this.server + '/v2/searchextended/count',
         header: {'Content-Type': 'text/plain; charset=utf-8'},
-        data: lexicons_query({page: page})
+        data: lexicons_query({page: page, ontology: this.ontology})
       }).then(
         response => (this.nitems = response.data['schema:numberOfItems'])
       ).catch(function (error) {
@@ -70,9 +72,9 @@ export default {
 
       axios({
         method: 'post',
-        url: 'https://api.dasch.swiss/v2/searchextended',
+        url: this.server +'/v2/searchextended',
         header: {'Content-Type': 'text/plain; charset=utf-8'},
-        data: lexicons_query({page: page})
+        data: lexicons_query({page: page, ontology: this.ontology})
       }).then(
         response => {
           this.lexicons = simplify_data(response.data).map(x => ({

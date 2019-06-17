@@ -80,7 +80,9 @@
                 lexicon: {
                     props: {}
                 },
-                show_alpha: true
+                show_alpha: true,
+                server: this.$env.get('SERVER'),
+                ontology: this.$env.get('ONTOLOGY')
             }
         },
         computed: {
@@ -96,11 +98,12 @@
             do_search: function(searchterm) {
                 this.show_alpha = false;
                 this.loading = true;
+                getLexiconData
                 axios({
                     method: 'post',
-                    url: 'https://api.dasch.swiss/v2/searchextended/count',
+                    url: this.server + '/v2/searchextended/count',
                     header: {'Content-Type': 'text/plain; charset=utf-8'},
-                    data: lemmata_search({searchterm: searchterm, page: 0, ...(this.lexicon_iri !== undefined && {lexicon_iri: this.lexicon_iri})})
+                    data: lemmata_search({searchterm: searchterm, page: 0, ...(this.lexicon_iri !== undefined && {lexicon_iri: this.lexicon_iri}), ontology: this.ontology})
                 }).then(
                         response => (this.nitems = response.data['schema:numberOfItems'])
                 ).catch(function (error) {
@@ -110,9 +113,9 @@
                 });
                 axios({
                     method: 'post',
-                    url: 'https://api.dasch.swiss/v2/searchextended',
+                    url: this.server + '/v2/searchextended',
                     header: {'Content-Type': 'text/plain; charset=utf-8'},
-                    data: lemmata_search({searchterm: searchterm, page: 0, ...(this.lexicon_iri !== undefined && {lexicon_iri: this.lexicon_iri})})
+                    data: lemmata_search({searchterm: searchterm, page: 0, ...(this.lexicon_iri !== undefined && {lexicon_iri: this.lexicon_iri}), ontology: this.ontology})
                 }).then(
                         response => {
                             this.lemmata = simplify_data(response.data).map(x => ({
@@ -141,9 +144,9 @@
                 this.lemmata = [];
                 axios({
                     method: 'post',
-                    url: 'https://api.dasch.swiss/v2/searchextended',
+                    url: this.server + '/v2/searchextended',
                     header: {'Content-Type': 'text/plain; charset=utf-8'},
-                    data: lemmata_query({page: page, start: ch, ...(this.lexicon_iri !== undefined && {lexicon_iri: this.lexicon_iri})})
+                    data: lemmata_query({page: page, start: ch, ...(this.lexicon_iri !== undefined && {lexicon_iri: this.lexicon_iri}), ontology: this.ontology})
                 }).then(
                         response => {this.lemmata = simplify_data(response.data).map(x => ({
                             iri: x.iri,
@@ -164,9 +167,9 @@
                 this.loading = true;
                 axios({
                     method: 'post',
-                    url: 'https://api.dasch.swiss/v2/searchextended/count',
+                    url: this.server + '/v2/searchextended/count',
                     header: {'Content-Type': 'text/plain; charset=utf-8'},
-                    data: lemmata_query({page: 0, start: ch, ...(this.lexicon_iri !== undefined && {lexicon_iri: this.lexicon_iri})})
+                    data: lemmata_query({page: 0, start: ch, ...(this.lexicon_iri !== undefined && {lexicon_iri: this.lexicon_iri}), ontology: this.ontology})
                 }).then(
                         response => (this.nitems = response.data['schema:numberOfItems'])
                 ).catch(function (error) {

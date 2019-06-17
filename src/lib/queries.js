@@ -3,7 +3,7 @@ import doT from 'dot';
 export function lemmata_query(params) {
   return doT.template(`
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX mls: <http://api.dasch.swiss:443/ontology/0807/mls/simple/v2#>
+    PREFIX mls: <{{=it.ontology}}/ontology/0807/mls/simple/v2#>
     CONSTRUCT {
         ?lemma knora-api:isMainResource true .
         ?lemma mls:hasLemmaText ?text .
@@ -48,7 +48,7 @@ export function lemmata_query(params) {
 export function lemmata_search(params) {
   return doT.template(`
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX mls: <http://api.dasch.swiss:443/ontology/0807/mls/simple/v2#>
+    PREFIX mls: <{{=it.ontology}}/ontology/0807/mls/simple/v2#>
     CONSTRUCT {
         ?lemma knora-api:isMainResource true .
         ?lemma mls:hasLemmaText ?text .
@@ -99,7 +99,7 @@ export function lemmata_search(params) {
 export function lexicons_query(params) {
   return doT.template(`
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX mls: <http://api.dasch.swiss:443/ontology/0807/mls/simple/v2#>
+    PREFIX mls: <{{=it.ontology}}/ontology/0807/mls/simple/v2#>
     CONSTRUCT {
         ?lexicon knora-api:isMainResource true .
         ?lexicon mls:hasCitationForm ?text .
@@ -120,7 +120,7 @@ export function lexicons_query(params) {
 export function lexlemma_query(params) {
   return doT.template(`
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX mls: <http://api.dasch.swiss:443/ontology/0807/mls/simple/v2#>
+    PREFIX mls: <{{=it.ontology}}/ontology/0807/mls/simple/v2#>
     CONSTRUCT {
         ?lexicon knora-api:isMainResource true .
         ?article mls:hasALinkToLemma ?lemma .
@@ -152,7 +152,7 @@ export function lexlemma_query(params) {
 export function lemmatalex_query(params) {
   return doT.template(`
     PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-    PREFIX mls: <http://api.dasch.swiss:443/ontology/0807/mls/simple/v2#>
+    PREFIX mls: <{{=it.ontology}}/ontology/0807/mls/simple/v2#>
     CONSTRUCT {
         ?lemma knora-api:isMainResource true .
         ?lemma mls:hasLemmaText ?text .

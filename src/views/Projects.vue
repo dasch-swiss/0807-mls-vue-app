@@ -19,6 +19,8 @@ export default {
     data: function() {
         return {
             projects: [{longname: "bb", id: "aa"}],
+            server: this.$env.get('SERVER'),
+            ontology: this.$env.get('ONTOLOGY')
         }
     },
     methods: {
@@ -30,7 +32,7 @@ export default {
     },
     mounted: function() {
         axios
-            .get('https://api.dasch.swiss/v1/projects')
+            .get(this.server + '/v1/projects')
             .then(response => (this.projects = response.data.projects))
     }
 }

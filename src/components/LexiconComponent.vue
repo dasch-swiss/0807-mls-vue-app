@@ -20,7 +20,9 @@
     data: function() {
       return {
         lexicon: {
-          props: {}
+          props: {},
+          server: this.$env.get('SERVER'),
+          ontology: this.$env.get('ONTOLOGY')
         }
       }
     },
@@ -31,7 +33,7 @@
       getLexiconData: function (iri) {
         axios({
           method: 'get',
-          url: 'https://api.dasch.swiss/v2/resources/' + encodeURIComponent(iri),
+          url: this.server + '/v2/resources/' + encodeURIComponent(iri),
         }).then(
           response => (this.lexicon = simplify_resource(response.data))
         ).catch(function (error) {

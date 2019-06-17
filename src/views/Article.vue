@@ -19,14 +19,16 @@
     data: function() {
       return {
         article: {},
-        lexicon: {}
+        lexicon: {},
+        server: this.$env.get('SERVER'),
+        ontology: this.$env.get('ONTOLOGY')
       }
     },
     methods: {
       getArticle: function(iri) {
         axios({
           method: 'get',
-          url: 'https://api.dasch.swiss/v2/resources/' + encodeURIComponent(iri),
+          url: this.server + '/v2/resources/' + encodeURIComponent(iri),
         }).then(
           response => {
             let tmpdata = simplify_data(response.data)[0].props;
@@ -38,7 +40,7 @@
             console.log(tmpdata);
             axios({
               method: 'get',
-              url: 'https://api.dasch.swiss/v2/resources/' + encodeURIComponent(this.article.lexicon_iri)
+              url: this.server + '/v2/resources/' + encodeURIComponent(this.article.lexicon_iri)
             }).then(
               response => {
                 let tmpdata = simplify_data(response.data)[0].props;
