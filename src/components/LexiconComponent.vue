@@ -12,7 +12,6 @@
 
 <script>
   import axios from 'axios';
-  import router from '../router';
   import {simplify_resource} from '../lib/jsonld_simplifier';
 
   export default {
@@ -21,9 +20,9 @@
       return {
         lexicon: {
           props: {},
-          server: this.$env.get('SERVER'),
-          ontology: this.$env.get('ONTOLOGY')
-        }
+        },
+        server: this.$env.get('SERVER'),
+        ontology: this.$env.get('ONTOLOGY')
       }
     },
     props: {
