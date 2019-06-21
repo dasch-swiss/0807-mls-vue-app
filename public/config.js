@@ -1,4 +1,4 @@
 window.CONFIG = {
-    "SERVER": "https://api.dasch.swiss",
-    "ONTOLOGY": "http://api.dasch.swiss:443"
+    "SERVER": "https://api.02.unibas.dasch.swiss",
+    "ONTOLOGY": "http://api.02.unibas.dasch.swiss"
 };
