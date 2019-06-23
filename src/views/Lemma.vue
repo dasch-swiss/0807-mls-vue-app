@@ -36,10 +36,10 @@
                     <td>Variante(n)</td><td>:</td><td><div v-for="tmp in lemma.props['mls:hasVariants']">{{ tmp.strval }}</div></td>
                 </tr>
                 <tr v-if="lemma.props.hasOwnProperty('mls:hasViaf')">
-                    <td>VIAF</td><td>:</td><td>{{ lemma.props['mls:hasViaf'][0].strval }}</td>
+                  <td>VIAF</td><td>:</td><td><v-btn color="info" :href="'https://viaf.org/' + lemma.props['mls:hasViaf'][0].strval">{{ lemma.props['mls:hasViaf'][0].strval }}</v-btn></td>
                 </tr>
                 <tr v-if="lemma.props.hasOwnProperty('mls:hasGnd')">
-                    <td>GND</td><td>:</td><td>{{ lemma.props['mls:hasGnd'][0].strval }}</td>
+                  <td>GND</td><td>:</td><td><v-btn color="info" :href="'http://d-nb.info/gnd/' + lemma.props['mls:hasGnd'][0].strval">{{ lemma.props['mls:hasGnd'][0].strval }}</v-btn></td>
                 </tr>
             </table>
             <div>Erscheint in:</div>
@@ -56,37 +56,37 @@ import {simplify_resource} from '../lib/jsonld_simplifier';
 import lexfromlemma from './LexFromLemma';
 
 export default {
-    name: 'lemma',
-    components: {
-        lexfromlemma
-    },
-    data: function() {
-        return {
-            lemma: {
-                props: {}
-            },
-            lexicon_iri: undefined,
-            lexicon: {
-                props: {gaga: 'gaga'}
-            },
-            server: this.$env.get('SERVER'),
-            ontology: this.$env.get('ONTOLOGY')
-        }
-    },
-    methods: {
-        getResourceData: function (iri) {
-            axios({
-                method: 'get',
-                url: this.server + '/v2/resourcess/' + encodeURIComponent(iri),
-                }).then(
-                response => (this.lemma = simplify_resource(response.data))
-            ).catch(function (error) {
-                console.log(error);
-            })
-        }
-    },
-    mounted () {
-        this.getResourceData(this.$route.params.iri, 'lemma');
+  name: 'lemma',
+  components: {
+    lexfromlemma
+  },
+  data: function() {
+    return {
+      lemma: {
+        props: {}
+      },
+      lexicon_iri: undefined,
+      lexicon: {
+        props: {gaga: 'gaga'}
+      },
+      server: this.$env.get('SERVER'),
+      ontology: this.$env.get('ONTOLOGY'),
     }
+  },
+  methods: {
+    getResourceData: function (iri) {
+      axios({
+        method: 'get',
+        url: this.server + '/v2/resources/' + encodeURIComponent(iri),
+      }).then(
+        response => (this.lemma = simplify_resource(response.data))
+      ).catch(function (error) {
+        console.log(error);
+      })
+    },
+  },
+  mounted () {
+    this.getResourceData(this.$route.params.iri, 'lemma');
+  }
 }
 </script>
