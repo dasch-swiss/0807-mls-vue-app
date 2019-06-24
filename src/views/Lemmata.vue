@@ -98,7 +98,6 @@
             do_search: function(searchterm) {
                 this.show_alpha = false;
                 this.loading = true;
-                getLexiconData
                 axios({
                     method: 'post',
                     url: this.server + '/v2/searchextended/count',
