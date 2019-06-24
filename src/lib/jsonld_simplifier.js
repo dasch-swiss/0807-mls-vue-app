@@ -87,6 +87,7 @@ export function simplify_property(propdata) {
       case 'knora-api:attachedToUser': break;
       case 'knora-api:hasPermissions': break;
       case 'knora-api:valueAsString': property.strval = propdata[propfield]; break;
+      case 'knora-api:listValueAsListNode': property.node_iri = propdata[propfield]['@id']; break;
       case 'knora-api:listValueAsListNodeLabel': property.strval = propdata[propfield]; break;
       case 'knora-api:linkValueHasSource': {
         if (propdata[propfield] instanceof Array) {

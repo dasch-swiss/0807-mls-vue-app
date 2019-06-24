@@ -3,10 +3,10 @@
     <v-flex xs12 sm8 offset-sm2>
       <v-card>
         <v-card-title primary-title v-html="lexicon.citation"></v-card-title>
-        <v-card-text v-html="article.text"></v-card-text>
+        <v-card-text v-html="article.text + '<br/>(Seite: ' + article.npages + ')'"></v-card-text>
       </v-card>
       <v-card>
-        <v-card-title primary-title>Links</v-card-title>
+        <v-card-title primary-title><h4>Links</h4></v-card-title>
         <v-card-text>
           <table>
             <tr v-if="article.fonoteca_code"><td>Fonoteca</td><td>:</td><td>{{ article.fonoteca_code }}</td></tr>
@@ -56,7 +56,6 @@
               ticinolex_code: tmpdata.hasOwnProperty('mls:hasTicinoLexCode') ? tmpdata['mls:hasTicinoLexCode'][0].strval : undefined,
               weblink: tmpdata.hasOwnProperty('mls:hasWebLink') ? tmpdata['mls:hasWebLink'][0].strval : undefined
             };
-            console.log(tmpdata);
             axios({
               method: 'get',
               url: this.server + '/v2/resources/' + encodeURIComponent(this.article.lexicon_iri)
@@ -64,7 +63,7 @@
               response => {
                 let tmpdata = simplify_data(response.data)[0].props;
                 this.lexicon = {
-                  citation: tmpdata['mls:hasCitationForm'][0].strval.replace(/\\n/g, "<br />"),
+                  citation: '<h4>' + tmpdata['mls:hasCitationForm'][0].strval.replace(/\\n/g, "<br />") + '</h4>',
                   year: tmpdata['mls:hasYear'][0].strval
                 }
               }

@@ -15,7 +15,7 @@
       <template v-slot:items="props">
         <td v-on:click="gotoLexicon(props.item.iri)">{{ props.item.citationForm }}</td>
         <td v-on:click="gotoLexicon(props.item.iri)">{{ props.item.year }}</td>
-        <td v-on:click="gotoLexicon(props.item.iri)">{{ props.item.webLink }}</td>
+        <td v-on:click="gotoLexicon(props.item.iri)">{{ props.item.weblink }}</td>
       </template>
     </v-data-table>
     <v-pagination
@@ -81,7 +81,7 @@ export default {
             iri: x.iri,
             citationForm: x.props.hasOwnProperty('mls:hasCitationForm') ? x.props['mls:hasCitationForm'][0].strval : '-',
             year: x.props.hasOwnProperty('mls:hasYear') ? x.props['mls:hasYear'][0].strval : '-',
-            webLink: x.props.hasOwnProperty('mls:hasLexiconWeblink') ? x.props['mls:hasLexiconWeblink'][0].strval : '-'
+            weblink: x.props.hasOwnProperty('mls:hasLexiconWeblink') ? x.props['mls:hasLexiconWeblink'][0].strval : '-'
           })), console.log(this.lexicons)
         }
       ).catch(function (error) {
