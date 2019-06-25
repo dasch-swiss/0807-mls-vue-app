@@ -7,6 +7,8 @@ import Lemma from '../views/Lemma'
 import Lexicons from '../views/Lexicons'
 import Article from '../views/Article'
 import HelloWorldPage from '../views/HelloWorldPage'
+import StartPage from '../views/StartPage'
+import InfoPage from '../views/InfoPage'
 
 Vue.use(Router)
 
@@ -45,9 +47,15 @@ export default new Router({
       component: Article
     },
     {
-      path: '/helloworld',
-      name: 'HelloWorldPage',
-      component: HelloWorldPage
+      path: '/start',
+      name: 'Start',
+      component: StartPage
+    },
+    {
+      path: '/info',
+      name: 'InfoPage',
+      component: InfoPage
     }
+
   ]
 })

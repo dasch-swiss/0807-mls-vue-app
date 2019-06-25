@@ -13,28 +13,25 @@
         ></v-img>
       </v-flex>
 
-      <v-flex mb-4>
-        <h1 class="display-2 font-weight-bold mb-3">
-          Musikgeschichte der Schweiz auf einen Klick: Das Musiklexikon der Schweiz (MLS)
-        </h1>
-      </v-flex>
-
-      <v-flex
-        mb-5
-        xs12
-      >
-        <h2 class="headline font-weight-bold mb-3">Warum ein neues Musiklexikon?</h2>
-
-        <v-layout justify-center>
-          Die Schweiz verfügt im Gegensatz zu anderen europäischen Ländern über kein modernes
-          Nachschlagewerk zur Musikgeschichte. Die bestehenden Lexika sind veraltet und werden der Vielfalt und dem Reichtum
-          des Musiklebens der Schweiz nicht gerecht. Ein neues, wissenschaftlich fundiertes Musiklexikon wird schon seit
-          Jahrzehnten verlangt. Diese Forderung nach fundiertem Wissen über die Schweizer Musik hat mit dem 2012 in die
-          Bundesverfassung aufgenommenen Artikel 67a zur Stärkung der musikalischen Bildung eine neue Aktualität gewonnen:
-          Um die neue Verfassungsbestimmung umzusetzen braucht es ein zeitgemässes Informationssystem zur Schweizer
-          Musikgeschichte auf wissenschaftlicher Basis. 
-        </v-layout>
-      </v-flex>
+      <v-layout justify-center>
+        <v-list>
+          <v-list-tile to="/start">
+            <v-list-tile-content>
+              <v-list-tile-title>Musikgeschichte der Schweiz auf einem Klick: Die bestehenden Lexika</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile to="/info">
+            <v-list-tile-content>
+              <v-list-tile-title>Das Projekt: Ein neues Musiklexikon mit gutem Gedächtnis</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile to="">
+            <v-list-tile-content>
+              <v-list-tile-title>Über uns / Impressum</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-layout>
     </v-layout>
   </v-container>
 </template>
