@@ -15,7 +15,7 @@
           <span class="mr-1">Projekt</span>
         </v-btn>
         <v-btn flat to="/about">
-          <span class="mr-1">About</span>
+          <span class="mr-1">Über uns</span>
         </v-btn>
       <v-btn flat to="/">
         <span class="mr-1">Home</span>
