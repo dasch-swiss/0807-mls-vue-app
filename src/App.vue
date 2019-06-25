@@ -18,7 +18,7 @@
           <span class="mr-1">Über uns</span>
         </v-btn>
       <v-btn flat to="/">
-        <span class="mr-1">Home</span>
+        <span class="mr-1"><v-icon>home</v-icon></span>
       </v-btn>
     </v-toolbar>
     <v-content>
