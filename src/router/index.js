@@ -6,9 +6,9 @@ import Lemmata from '../views/Lemmata'
 import Lemma from '../views/Lemma'
 import Lexicons from '../views/Lexicons'
 import Article from '../views/Article'
-import HelloWorldPage from '../views/HelloWorldPage'
 import StartPage from '../views/StartPage'
 import InfoPage from '../views/InfoPage'
+import About from '../views/About'
 
 Vue.use(Router)
 
@@ -55,7 +55,11 @@ export default new Router({
       path: '/info',
       name: 'InfoPage',
       component: InfoPage
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: About
     }
-
   ]
 })

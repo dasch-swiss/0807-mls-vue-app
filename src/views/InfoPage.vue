@@ -27,7 +27,7 @@
 
   <h2>Wer macht was?</h2>
   <p>Trägerschaft: Schweizer Musikrat (SMR)<br/>
-  Auftragnehmerin: Schweizerische Musikforschen¬de Gesellschaft (SMG), Steuerungsgruppe unter dem Vorsitz von
+  Auftragnehmerin: Schweizerische Musikforschende Gesellschaft (SMG), Steuerungsgruppe unter dem Vorsitz von
     Prof. Dr. Cristina Urchueguía (Universität Bern; Zentralpräsidentin SMG)</p>
 
   <h2>Was bisher geschah</h2>
@@ -50,7 +50,7 @@
   <p>
     Das MLS ist für Produktion, Trägerschaft und Finanzierung auf zahlreiche Mitarbeiterinnen und Mitarbeiter angewiesen.
     Haben Sie Lust, mitzu¬machen oder mitzufinanzieren?<br>
-    Kontaktadresse: <a href="mailto:info@smg-ssm.ch">info@smg-ssm.ch (Betreff: MLS)</a>
+    Kontaktadresse: <a href="mailto:info@smg-ssm.ch?subject=MLS">info@smg-ssm.ch (Betreff: MLS)</a>
   </p>
 
   <h2>Spenden</h2>
@@ -69,9 +69,10 @@
 
 <script>
   export default {
-    name: "InfoPage"
+    name: "InfoPage",
   }
 </script>
+
 
 <style scoped>
 
